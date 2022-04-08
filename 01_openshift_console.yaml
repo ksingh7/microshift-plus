@@ -97,7 +97,6 @@ metadata:
   name: openshift-console
   namespace: kube-system
 spec:
-  host: openshift-console.apps.127.0.0.1.nip.io
   to:
     kind: Service
     name: openshift-console-service
