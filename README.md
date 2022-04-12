@@ -23,9 +23,14 @@
 git clone https://github.com/ksingh7/microshift.git
 cd microshift
 ```
-- Lanuch Microshift environment (MacOS)
+- Lanuch Microshift environment (MacOS) [Sample Output]
 ```
 ./macos_create_microshift.sh
+```
+- Deploy a Sample App on Microshift
+```
+podman exec microshift oc create -f https://raw.githubusercontent.com/ksingh7/microshift-man/main/02_sample_app.yaml
+podman exec microshift oc get route
 ```
 - Purge Microshift environment (MacOS)
 ```
@@ -40,6 +45,7 @@ Setting rootful mode...
 Launching Microshift...
 Waiting for Microshift to become Ready...
 Microshift is Now Ready ...
+Patch OpenShift Router to use nip.io for outbound routing ...
 Setting up OpenShift Web Console ...
 ----------------------------------------------------------
 serviceaccount/openshift-console created
@@ -49,15 +55,15 @@ service/kube-api created
 deployment.apps/openshift-console-deployment created
 service/openshift-console-service created
 route.route.openshift.io/openshift-console created
-pod/openshift-console-deployment-7c8785cc5c-vcmr4 condition met
+pod/openshift-console-deployment-7c8785cc5c-46v7q condition met
 ----------------------------------------------------------
 ############### OpenShift Console is Ready ###############################
-http://openshift-console.apps.127.0.0.1.nip.io
+http://openshift-console-kube-system.apps.127.0.0.1.nip.io
 ##########################################################################
 Setting up OLM ...
 OLM Setup Completed ...
 ############### Microshift Setup Completed ###############################
-OpenShift Console URL      : http://openshift-console.apps.127.0.0.1.nip.io
+OpenShift Console URL      : http://openshift-console-kube-system.apps.127.0.0.1.nip.io
 OpenShift / Kubectl Access : podman exec -it microshift /bin/bash
 ##########################################################################
 ```
