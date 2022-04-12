@@ -28,7 +28,11 @@ podman exec microshift oc wait --for=condition=Ready --timeout=10m pod/$openshif
 
 echo "OpenShift Web Console is Now Ready, your Console URL is"
 url=$(podman exec microshift oc get route -n kube-system openshift-console -o jsonpath='{.spec.host}')
+echo "--------------------------------------------------------------------"
 echo "http://$url"
+echo "--------------------------------------------------------------------"
 
 echo "To use oc/kubectl client, run the following command"
+echo "--------------------------------------------------------------------"
 echo "podman exec -it microshift /bin/bash"
+echo "--------------------------------------------------------------------"
