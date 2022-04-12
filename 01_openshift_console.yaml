@@ -1,9 +1,10 @@
 ---
 apiVersion: project.openshift.io/v1
-kind: project
+kind: Project
 metadata:
   name: openshift-console
 ---
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
