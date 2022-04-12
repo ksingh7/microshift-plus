@@ -16,7 +16,7 @@ podman run -d --rm --name microshift --privileged -v microshift-data:/var/lib -p
 echo "Waiting for Microshift to become Ready..."
 sleep 100
 default_dns_pod=$(podman exec microshift oc get po -A | grep -i dns-default | awk '{print $2}')
-podman exec microshift oc wait --for=condition=Ready --timeout=10m pod/$default_dns_pod -n openshift-dns
+podman exec microshift oc wait --for=condition=Ready --timeout=10m pod/$default_dns_pod -n openshift-dns &> /dev/null
 
 echo "Microshift is Now Ready ..."
 
@@ -33,7 +33,6 @@ echo "http://$url"
 echo "##########################################################################"
 
 echo "Setting up OLM ..."
-echo "----------------------------------------------------------"
 podman exec microshift curl -L https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.20.0/install.sh -o install.sh &> /dev/null
 podman exec microshift chmod +x install.sh
 podman exec microshift ./install.sh v0.20.0 &> /dev/null

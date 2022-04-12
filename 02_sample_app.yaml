@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jade-shooter
+  labels:
+    app: jade-shooter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jade-shooter
+  template:
+    metadata:
+      labels:
+        app: jade-shooter
+    spec:
+      containers:
+      - name: jade-shooter0
+        image: jwsy/jade-shooter:v1.1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jade-shooter-service
+spec:
+  selector:
+    app: jade-shooter
+  ports:
+  - port: 80
+    targetPort: 80
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  name: jade-shooter
+spec:
+  host: jade-shooter.apps.127.0.0.1.nip.io
+  to:
+    kind: Service
+    name: jade-shooter-service
+    weight: 100
+  port:
+    targetPort: 80
+  wildcardPolicy: None
