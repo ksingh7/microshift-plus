@@ -20,6 +20,11 @@ podman exec microshift oc wait --for=condition=Ready --timeout=10m pod/$default_
 
 echo "Microshift is Now Ready ..."
 
+echo "Patch OpenShift Router to use nip.io for outbound routing ..."
+router_default_pod=$(podman exec microshift oc get po -n openshift-ingress | tail -1 | awk '{print $1}')
+podman exec microshift oc -n openshift-ingress set env deployment/router-default --overwrite ROUTER_SUBDOMAIN='${name}-${namespace}.apps.127.0.0.1.nip.io' ROUTER_ALLOW_WILDCARD_ROUTES="true" ROUTER_OVERRIDE_HOSTNAME="true"
+podman exec microshift oc -n openshift-ingress delete po $router_default_pod --force --grace-period=0 &> /dev/null
+
 echo "Setting up OpenShift Web Console ..."
 echo "----------------------------------------------------------"
 podman exec microshift oc create -f https://raw.githubusercontent.com/ksingh7/microshift/main/01_openshift_console.yaml
@@ -37,6 +42,10 @@ podman exec microshift curl -L https://github.com/operator-framework/operator-li
 podman exec microshift chmod +x install.sh
 podman exec microshift ./install.sh v0.20.0 &> /dev/null
 echo "OLM Setup Completed ..."
+
+# Scale down packageserver deployment replica count to 1 (default is 2)
+podman exec microshift oc scale deployments/packageserver  -n olm --replicas=1
+
 echo "############### Microshift Setup Completed ###############################"
 echo "OpenShift Console URL      : http://$url"
 echo "OpenShift / Kubectl Access : podman exec -it microshift /bin/bash"
