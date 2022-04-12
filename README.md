@@ -42,3 +42,19 @@ curl -L https://github.com/operator-framework/operator-lifecycle-manager/release
 chmod +x install.sh
 ./install.sh v0.20.0
 ```
+
+- Install Podman on Fedora35
+```
+sudo su
+dnf copr enable rhcontainerbot/podman4
+dnf install podman
+
+command -v setsebool >/dev/null 2>&1 || sudo setsebool -P container_manage_cgroup true
+
+podman run -d --rm --name microshift --privileged -v microshift-data:/var/lib -p 6443:6443 -p 80:80 -p 8080:8080 quay.io/microshift/microshift-aio:latest
+
+podman exec -it microshift /bin/bash
+oc get nodes
+oc get po -A -w
+
+```
