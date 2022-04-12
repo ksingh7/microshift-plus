@@ -23,7 +23,7 @@
 git clone https://github.com/ksingh7/microshift.git
 cd microshift
 ```
-- Lanuch Microshift environment (MacOS) [Sample Output]
+- Lanuch Microshift environment (MacOS) [sample output](https://github.com/ksingh7/microshift-man#sample-output)
 ```
 ./macos_create_microshift.sh
 ```
