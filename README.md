@@ -2,10 +2,12 @@
 
 [Microshift](https://github.com/redhat-et/microshift) is a small form factor OpenShift/Kubernetes optimized for edge computing. 
 
-[Microshift-Man](https://github.com/ksingh7/microshift-man) provides helper script to setup & purge Microshift environments runing on Podman for dev/test/homelab setup.
+[Microshift-Plus](https://github.com/ksingh7/microshift-plus) uses MicroShift at its core but on top it provides tools which are important to deliver instant/local OpenShift Environments for Development. 
+
+This is a prototype and comes with a set of helper script to setup & purge Microshift-Plus environments runing on Podman for dev/test/homelab setup.
 
 ## Features
-[Microshift-Man](https://github.com/ksingh7/microshift-man) provides the following features
+[Microshift-Plus](https://github.com/ksingh7/microshift-plus) provides the following features
 - Initialize & Start Podman Machine (for MacOS)
 - Set `rootful` mode needed for Microshift's Privileged container
 - Launch Microshift Container
@@ -20,16 +22,16 @@
 - Install [Podman](https://podman.io/getting-started/installation)
 - Get the code
 ```
-git clone https://github.com/ksingh7/microshift.git
-cd microshift
+git clone https://github.com/ksingh7/microshift-plus
+cd microshift-plus
 ```
-- Lanuch Microshift environment (MacOS) [sample output](https://github.com/ksingh7/microshift-man#sample-output)
+- Lanuch Microshift environment (MacOS) [sample output](https://github.com/ksingh7/microshift-plus#sample-output)
 ```
 ./macos_create_microshift.sh
 ```
 - Deploy a Sample App on Microshift
 ```
-podman exec microshift oc create -f https://raw.githubusercontent.com/ksingh7/microshift-man/main/02_sample_app.yaml
+podman exec microshift oc create -f https://raw.githubusercontent.com/ksingh7/microshift-plus/main/02_sample_app.yaml
 podman exec microshift oc get route
 ```
 - Purge Microshift environment (MacOS)
