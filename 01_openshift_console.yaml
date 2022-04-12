@@ -1,15 +1,8 @@
----
-apiVersion: project.openshift.io/v1
-kind: Project
-metadata:
-  name: openshift-console
----
-
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: openshift-console
-  namespace: openshift-console
+  namespace: kube-system
 secrets:
 - name: openshift-console-token
 ---
@@ -17,7 +10,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: openshift-console-secret
-  namespace: openshift-console
+  namespace: kube-system
   annotations:
     kubernetes.io/service-account.name: openshift-console
 type: kubernetes.io/service-account-token
@@ -26,7 +19,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: openshift-console-cluster-role-binding
-  namespace: openshift-console
+  namespace: kube-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -34,13 +27,13 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: openshift-console
-  namespace: openshift-console
+  namespace: kube-system
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: kube-api
-  namespace: openshift-console
+  namespace: kube-system
 spec:
   selector:
     app: flannel
@@ -52,7 +45,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: openshift-console-deployment
-  namespace: openshift-console
+  namespace: kube-system
   labels:
     app: openshift-console
 spec:
@@ -89,7 +82,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: openshift-console-service
-  namespace: openshift-console
+  namespace: kube-system
 spec:
   selector:
     app: openshift-console
@@ -101,7 +94,7 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   name: openshift-console
-  namespace: openshift-console
+  namespace: kube-system
 spec:
   host: openshift-console.apps.127.0.0.1.nip.io
   to:

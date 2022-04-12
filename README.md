@@ -58,3 +58,9 @@ oc get nodes
 oc get po -A -w
 
 ```
+- Grap kubeconfig file
+```
+mkdir ~/.kube
+sudo podman cp microshift:/var/lib/microshift/resources/kubeadmin/kubeconfig ~/.kube/config
+sudo chown `whoami`: ~/.kube/config
+```
