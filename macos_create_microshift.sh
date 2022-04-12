@@ -32,7 +32,7 @@ echo "----------------------------------------------------------"
 podman exec microshift oc create -f https://raw.githubusercontent.com/ksingh7/microshift-man/main/01_openshift_console.yaml
 openshift_console_pod=$(podman exec microshift oc get po -A | grep -i openshift-console-deployment | awk '{print $2}')
 podman exec microshift oc wait --for=condition=Ready --timeout=10m pod/$openshift_console_pod -n kube-system
-url=$(podman exec microshift oc get route -n kube-system openshift-console -o jsonpath='{.spec.host}')
+url=$(podman exec microshift oc get route -n kube-system openshift-console -o jsonpath='{.status.ingress[0].host}')
 echo "----------------------------------------------------------"
 echo "############### OpenShift Console is Ready ###############################"
 echo "http://$url"
