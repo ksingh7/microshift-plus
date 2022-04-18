@@ -12,7 +12,7 @@ echo "Setting rootful mode..."
 podman machine set --rootful
 
 echo "Launching Microshift..."
-podman run -d --rm --name microshift --privileged -v microshift-data:/var/lib -p 6443:6443 -p 80:80 -p 8080:8080 quay.io/microshift/microshift-aio:latest &> /dev/null
+podman run -d --name microshift --privileged -v microshift-data:/var/lib -p 6443:6443 -p 80:80 -p 8080:8080 quay.io/microshift/microshift-aio:latest &> /dev/null
 echo "Waiting for Microshift to become Ready..."
 sleep 100
 default_dns_pod=$(podman exec microshift oc get po -A | grep -i dns-default | awk '{print $2}')
@@ -29,7 +29,7 @@ podman exec microshift oc wait --for=condition=Ready --timeout=10m pod/$router_d
 
 echo "Setting up OpenShift Web Console ..."
 echo "----------------------------------------------------------"
-podman exec microshift oc create -f https://raw.githubusercontent.com/ksingh7/microshift-man/main/01_openshift_console.yaml
+podman exec microshift oc create -f https://raw.githubusercontent.com/ksingh7/microshift-plus/main/01_openshift_console.yaml
 openshift_console_pod=$(podman exec microshift oc get po -A | grep -i openshift-console-deployment | awk '{print $2}')
 podman exec microshift oc wait --for=condition=Ready --timeout=10m pod/$openshift_console_pod -n kube-system &> /dev/null
 url=$(podman exec microshift oc get route -n kube-system openshift-console -o jsonpath='{.status.ingress[0].host}')

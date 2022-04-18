@@ -2,7 +2,7 @@
 
 [Microshift](https://github.com/redhat-et/microshift) is a small form factor OpenShift/Kubernetes optimized for edge computing. 
 
-[Microshift-Plus](https://github.com/ksingh7/microshift-plus) uses MicroShift at its core but on top it provides tools which are important to deliver instant/local OpenShift Environments for Development. 
+[Microshift-Plus](https://github.com/ksingh7/microshift-plus) uses MicroShift at its core but on top it provides tools which are important to deliver instant/local/minuscule OpenShift Environments for Development. 
 
 This is a prototype and comes with a set of helper script to setup & purge Microshift-Plus environments runing on Podman for dev/test/homelab setup.
 
