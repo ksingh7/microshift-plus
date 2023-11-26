@@ -70,3 +70,43 @@ OpenShift / Kubectl Access : podman exec -it microshift /bin/bash
 ##########################################################################
 ```
 > Note : At my homelab it takes about 5 Minutes to complete, your milage may vary
+
+## Kube Config File
+* Create ~/.kube/config file with the content of the following
+```bash
+podman exec -it microshift /bin/bash
+cat /var/lib/microshift/resources/kubeadmin/kubeconfig
+```
+
+## Expose API
+```yaml
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/host.generated: 'true'
+  selfLink: /apis/route.openshift.io/v1/namespaces/default/routes/api
+  name: api
+  namespace: default
+  labels:
+    component: apiserver
+    provider: kubernetes
+spec:
+  host: api-default.cluster.local
+  to:
+    kind: Service
+    name: kubernetes
+    weight: 100
+  port:
+    targetPort: https
+  wildcardPolicy: None
+status:
+  ingress:
+    - host: api-default.apps.127.0.0.1.nip.io
+      routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+      wildcardPolicy: None
+
+```
